@@ -1,44 +1,77 @@
-#pragma once
+#ifndef MOTOR_CONTROLS_H
+#define MOTOR_CONTROLS_H
 
-// ─── Pin Definitions ───────────────────────────────────────────────────────
-// Motor A (Left wheel) – AIN1 and PWM tied together
-#define PIN_MOTOR_A_PWM   38
-#define PIN_MOTOR_A_IN2   37
-// Motor B (Right wheel) – BIN1 and PWM tied together
-#define PIN_MOTOR_B_PWM   40
-#define PIN_MOTOR_B_IN1   41
-
-// STBY is wired directly to 3.3V, no GPIO needed
-
-// Encoders (single-phase only)
-#define PIN_ENC_A         42  // Left wheel
-#define PIN_ENC_B         48  // Right wheel
-
-// ─── Tuning Constants (calibrate these for your bot) ──────────────────────
-#define PWM_SPEED         200   // 0-255 duty cycle
-#define PULSES_PER_TURN   150   // encoder pulses for a 90-degree pivot turn
+#include <Arduino.h>
+#include "Talos_Motor.h"
+#include "Talos_Encoder.h"
 
 class MotorControls {
 public:
     MotorControls();
 
-    // Move both wheels forward until each has counted x encoder pulses
-    void MoveForward(int x);
-    void MoveForwardNoEncoder(int x);
+    // System initialization
+    void SetupMotorControlsSystem();
+    void SetupMotorControlsSystemWithIR();
 
-    // Turn the robot left 90 degrees in place
-    void TurnLeft();
-    void TurnLeftNoEncoder(int x);
+    // System-wide reset (stop motors, clear flags, reset encoders)
+    void ResetMotorControlsSystem();
 
-    // Turn the robot right 90 degrees in place
-    void TurnRight();
-    void TurnRightNoEncoder(int x);
+    // Movement methods
+    void goForward(uint32_t targetPulses);      // moves forward, only stops when encoder target pulses are reached.
+    void goForwardUntilIntersection();          // moves forward, only stops when stop line is detected.
+    void goForwardWithIR(uint32_t targetPulses, bool enableStopBarDetection); // moves forward with lane correction, only stops when encoder target pulses are reached. if "enableStopBarDetection" is true, then also stop at the next stop line.
 
 private:
-    // Drive a single motor at the given PWM duty (0 = stop)
-    void setMotorA(int pwm);
-    void setMotorB(int pwm);
+    // ==== Motion Constants ====
+    static const uint16_t BASE_LEFT_DRIVE_PWM  = 600;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t BASE_RIGHT_DRIVE_PWM = 600;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t LANE_CORRECTION_PWM = 50;     // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t MAX_PWM = 1023;               // 10-bit PWM resolution = 0-1023                  // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t DEFAULT_ACCELERATION_DELAY_MS = 10;                                              // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
 
-    // Block until the given counter reaches targetPulses
-    void waitForPulses(volatile int &counter, int targetPulses);
+    // ==== Pin Definitions ====
+    static const uint8_t IR_FRONT_PIN = 14;
+    static const uint8_t IR_LEFT_PIN  = 21;
+    static const uint8_t IR_RIGHT_PIN = 47;
+
+    static const uint8_t ENC_LEFT_PIN  = 1;
+    static const uint8_t ENC_RIGHT_PIN = 2;
+
+    static const uint8_t MOTOR_LEFT_AIN  = 38;
+    static const uint8_t MOTOR_LEFT_PWM  = 39;
+
+    static const uint8_t MOTOR_RIGHT_AIN = 40;
+    static const uint8_t MOTOR_RIGHT_PWM = 41;
+
+    // ==== Motor & Encoder Objects ====
+    Talos_Motor motorLeft;
+    Talos_Motor motorRight;
+
+    Talos_Encoder encoderLeft;
+    Talos_Encoder encoderRight;
+
+    // ==== IR Flags ====
+    static volatile bool irFrontFlag;
+    static volatile bool irLeftFlag;
+    static volatile bool irRightFlag;
+
+    // Pointer used by static ISRs to access instance members
+    static MotorControls* instancePtr;
+
+    // ==== Interrupt Service Routines ====
+    static void IRAM_ATTR onEncoderLeftISR();
+    static void IRAM_ATTR onEncoderRightISR();
+
+    static void IRAM_ATTR onIRFrontISR();
+    static void IRAM_ATTR onIRLeftISR();
+    static void IRAM_ATTR onIRRightISR();
+
+    // ==== Helper Methods ====
+    void enableIRInterrupts();
+    void disableIRInterrupts();
+
+    void setupEncoderSystem();
+    void setupIRSystem();
 };
+
+#endif
