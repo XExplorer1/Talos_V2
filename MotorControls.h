@@ -16,7 +16,9 @@ public:
     void ResetMotorControlsSystem();
 
     // Movement methods
-    void goForward(uint32_t targetPulses);
+    void goForward(uint32_t targetPulses);      // moves forward, only stops when encoder target pulses are reached.
+    void goForwardUntilIntersection();          // moves forward, only stops when stop line is detected.
+    void goForwardWithIR(uint32_t targetPulses, bool enableStopBarDetection); // moves forward with lane correction, only stops when encoder target pulses are reached. if "enableStopBarDetection" is true, then also stop at the next stop line.
 
 private:
     // ==== Pin Definitions ====
