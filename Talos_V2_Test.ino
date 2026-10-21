@@ -1,12 +1,16 @@
 #include <Arduino.h>
 #include "MotorControls.h"
 
-
+MotorControls robot;
 //////////////////////////////////////////////////////////////////////////////////////////
 // MAIN
 
 void setup() {
+    robot.SetupMotorControlsSystem();
 
+    delay(2000);
+
+    robot.goForward(100);
 }
 void loop() {
 
