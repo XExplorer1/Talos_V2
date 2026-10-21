@@ -74,6 +74,31 @@ void MotorControls::ResetMotorControlsSystem()
     disableIRInterrupts();
 }
 
+void MotorControls::setupEncoderSystem()
+{
+    // Configure encoder pins
+    pinMode(ENC_LEFT_PIN, INPUT);
+    pinMode(ENC_RIGHT_PIN, INPUT);
+
+    // Attach encoder interrupts
+    attachInterrupt(
+        digitalPinToInterrupt(ENC_LEFT_PIN),
+        onEncoderLeftISR,
+        RISING);
+
+    attachInterrupt(
+        digitalPinToInterrupt(ENC_RIGHT_PIN),
+        onEncoderRightISR,
+        RISING);
+}
+
+void MotorControls::setupIRSystem()
+{
+    pinMode(IR_FRONT_PIN, INPUT);
+    pinMode(IR_LEFT_PIN, INPUT);
+    pinMode(IR_RIGHT_PIN, INPUT);
+}
+
 void MotorControls::enableIRInterrupts()
 {
     attachInterrupt(

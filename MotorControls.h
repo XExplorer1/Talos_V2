@@ -11,6 +11,7 @@ public:
 
     // System initialization
     void SetupMotorControlsSystem();
+    void SetupMotorControlsSystemWithIR();
 
     // System-wide reset (stop motors, clear flags, reset encoders)
     void ResetMotorControlsSystem();
@@ -61,6 +62,9 @@ private:
     // ==== Helper Methods ====
     void enableIRInterrupts();
     void disableIRInterrupts();
+
+    void setupEncoderSystem();
+    void setupIRSystem();
 };
 
 #endif
