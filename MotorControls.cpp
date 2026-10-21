@@ -140,4 +140,22 @@ void IRAM_ATTR MotorControls::onIRRightISR(){
 
 // ==== Public Methods =================================================================================================================================
 
+void MotorControls::goForward(uint32_t targetPulses){
+    // Start from a known state
+    encoderLeft.reset();
+    encoderRight.reset();
+
+    // Start both motors
+    motorLeft.setPWM(BASE_LEFT_DRIVE_PWM);
+    motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
+
+    // Continue until BOTH wheels reach target
+    while (encoderLeft.getCount() < targetPulses || encoderRight.getCount() < targetPulses){
+        // Intentionally empty
+        // Future encoder correction logic can be added here
+    }
+
+    // Stop and clean up
+    ResetMotorControlsSystem();
+}
 
