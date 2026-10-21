@@ -1,62 +1,50 @@
 #include "MotorControls.h"
 
-// ==== Static Member Definitions ====
+// ==== Static Member Definitions =======================================================================================================================
+
 volatile bool MotorControls::irFrontFlag = false;
 volatile bool MotorControls::irLeftFlag  = false;
 volatile bool MotorControls::irRightFlag = false;
 
 MotorControls* MotorControls::instancePtr = nullptr;
 
-// ==== Constructor ====
-MotorControls::MotorControls()
-    : motorLeft(MOTOR_LEFT_PWM, 0, 20000, 10),
-      motorRight(MOTOR_RIGHT_PWM, 1, 20000, 10),
-      encoderLeft(),
-      encoderRight()
-{
+// ==== Constructor =====================================================================================================================================
+
+MotorControls::MotorControls() : motorLeft(MOTOR_LEFT_PWM, 0, 20000, 10), motorRight(MOTOR_RIGHT_PWM, 1, 20000, 10), encoderLeft(), encoderRight(){
     // Assign instance pointer for ISR access
     instancePtr = this;
 }
-
-void MotorControls::SetupMotorControlsSystem()
-{
+// ==== Setup Functions =================================================================================================================================
+void MotorControls::SetupMotorControlsSystem(){
     // Configure motor direction pins
     pinMode(MOTOR_LEFT_AIN, OUTPUT);
     pinMode(MOTOR_RIGHT_AIN, OUTPUT);
 
-    // Always run motors in forward mode
+    // Forward-only operation
     digitalWrite(MOTOR_LEFT_AIN, HIGH);
     digitalWrite(MOTOR_RIGHT_AIN, HIGH);
 
-    // Configure encoder pins
-    pinMode(ENC_LEFT_PIN, INPUT);
-    pinMode(ENC_RIGHT_PIN, INPUT);
+    setupEncoderSystem();
 
-    // Configure IR sensor pins
-    pinMode(IR_FRONT_PIN, INPUT);
-    pinMode(IR_LEFT_PIN, INPUT);
-    pinMode(IR_RIGHT_PIN, INPUT);
-
-    // Attach encoder interrupts
-    attachInterrupt(
-        digitalPinToInterrupt(ENC_LEFT_PIN),
-        onEncoderLeftISR,
-        RISING);
-
-    attachInterrupt(
-        digitalPinToInterrupt(ENC_RIGHT_PIN),
-        onEncoderRightISR,
-        RISING);
-
-    // IR interrupts remain disabled until needed
-    disableIRInterrupts();
-
-    // Ensure clean startup state
     ResetMotorControlsSystem();
 }
 
-void MotorControls::ResetMotorControlsSystem()
-{
+void MotorControls::SetupMotorControlsSystemWithIR(){
+    // Configure motor direction pins
+    pinMode(MOTOR_LEFT_AIN, OUTPUT);
+    pinMode(MOTOR_RIGHT_AIN, OUTPUT);
+
+    // Forward-only operation
+    digitalWrite(MOTOR_LEFT_AIN, HIGH);
+    digitalWrite(MOTOR_RIGHT_AIN, HIGH);
+
+    setupEncoderSystem();
+    setupIRSystem();
+
+    ResetMotorControlsSystem();
+}
+
+void MotorControls::ResetMotorControlsSystem(){
     // Stop both motors
     motorLeft.stop();
     motorRight.stop();
@@ -74,8 +62,7 @@ void MotorControls::ResetMotorControlsSystem()
     disableIRInterrupts();
 }
 
-void MotorControls::setupEncoderSystem()
-{
+void MotorControls::setupEncoderSystem(){
     // Configure encoder pins
     pinMode(ENC_LEFT_PIN, INPUT);
     pinMode(ENC_RIGHT_PIN, INPUT);
@@ -92,15 +79,15 @@ void MotorControls::setupEncoderSystem()
         RISING);
 }
 
-void MotorControls::setupIRSystem()
-{
+void MotorControls::setupIRSystem(){
     pinMode(IR_FRONT_PIN, INPUT);
     pinMode(IR_LEFT_PIN, INPUT);
     pinMode(IR_RIGHT_PIN, INPUT);
 }
 
-void MotorControls::enableIRInterrupts()
-{
+// ==== Helper Functions ================================================================================================================================
+
+void MotorControls::enableIRInterrupts(){
     attachInterrupt(
         digitalPinToInterrupt(IR_FRONT_PIN),
         onIRFrontISR,
@@ -117,40 +104,40 @@ void MotorControls::enableIRInterrupts()
         RISING);
 }
 
-void MotorControls::disableIRInterrupts()
-{
+void MotorControls::disableIRInterrupts(){
     detachInterrupt(digitalPinToInterrupt(IR_FRONT_PIN));
     detachInterrupt(digitalPinToInterrupt(IR_LEFT_PIN));
     detachInterrupt(digitalPinToInterrupt(IR_RIGHT_PIN));
 }
 
-void IRAM_ATTR MotorControls::onEncoderLeftISR()
-{
+// ==== Interupt Methods ================================================================================================================================
+
+void IRAM_ATTR MotorControls::onEncoderLeftISR(){
     if (instancePtr != nullptr)
     {
         instancePtr->encoderLeft.increment();
     }
 }
 
-void IRAM_ATTR MotorControls::onEncoderRightISR()
-{
+void IRAM_ATTR MotorControls::onEncoderRightISR(){
     if (instancePtr != nullptr)
     {
         instancePtr->encoderRight.increment();
     }
 }
 
-void IRAM_ATTR MotorControls::onIRFrontISR()
-{
+void IRAM_ATTR MotorControls::onIRFrontISR(){
     irFrontFlag = true;
 }
 
-void IRAM_ATTR MotorControls::onIRLeftISR()
-{
+void IRAM_ATTR MotorControls::onIRLeftISR(){
     irLeftFlag = true;
 }
 
-void IRAM_ATTR MotorControls::onIRRightISR()
-{
+void IRAM_ATTR MotorControls::onIRRightISR(){
     irRightFlag = true;
 }
+
+// ==== Public Methods =================================================================================================================================
+
+
