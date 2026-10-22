@@ -21,8 +21,8 @@ void MotorControls::SetupMotorControlsSystem(){
     pinMode(MOTOR_RIGHT_AIN, OUTPUT);
 
     // Forward-only operation
-    digitalWrite(MOTOR_LEFT_AIN, HIGH);
-    digitalWrite(MOTOR_RIGHT_AIN, HIGH);
+    digitalWrite(MOTOR_LEFT_AIN, LOW);
+    digitalWrite(MOTOR_RIGHT_AIN, LOW);
 
     setupEncoderSystem();
 
