@@ -23,7 +23,7 @@ void loop() {
     On_Off_Switch(); // if off, wait till button press. if on, stop if button pressed.
     if(running){
         Serial.println("About to call goForward()");
-        robot.goForward(1000);
+        robot.goForward(4950); // NOTE: 50 pulses = ~1cm
         Serial.println("Returned from goForward()");
         turnOffRunning();
     }
