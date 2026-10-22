@@ -8,10 +8,12 @@ bool running = false;   // Variable to start and stop looping in test
 // MAIN
 
 void setup() {
+    Serial.begin(19200); // 115200 is default, but i've also been using 19200
+
+
     robot.SetupMotorControlsSystem();
     pinMode(PIN_BUTTON, INPUT_PULLUP);
 
-    Serial.begin(19200); // 115200 is default, but i've also been using 19200
 
     Serial.println("Talos Straightaway test ready.");
     Serial.println("Boot complete. Waiting for first button press...");
@@ -20,7 +22,9 @@ void loop() {
 
     On_Off_Switch(); // if off, wait till button press. if on, stop if button pressed.
     if(running){
-       robot.goForward(1000);
+        Serial.println("About to call goForward()");
+        robot.goForward(1000);
+        Serial.println("Returned from goForward()");
     }
 }
 

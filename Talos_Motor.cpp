@@ -1,9 +1,7 @@
 #include "Talos_Motor.h"
 #include <driver/ledc.h>
 
-Talos_Motor::Talos_Motor(uint8_t pwmPin, uint8_t pwmChannel, uint32_t pwmFrequency, uint8_t pwmResolution)
-    : _pwmPin(pwmPin), _pwmChannel(pwmChannel)
-{
+Talos_Motor::Talos_Motor(uint8_t pwmPin, uint8_t pwmChannel, uint32_t pwmFrequency, uint8_t pwmResolution): _pwmPin(pwmPin), _pwmChannel(pwmChannel){
     // Configure LEDC timer
     ledc_timer_config_t timerConfig = {
         .speed_mode       = LEDC_LOW_SPEED_MODE,
@@ -27,14 +25,12 @@ Talos_Motor::Talos_Motor(uint8_t pwmPin, uint8_t pwmChannel, uint32_t pwmFrequen
     ledc_channel_config(&channelConfig);
 }
 
-void Talos_Motor::setPWM(uint16_t dutyCycle)
-{
+void Talos_Motor::setPWM(uint16_t dutyCycle){
     ledc_set_duty(LEDC_LOW_SPEED_MODE, (ledc_channel_t)_pwmChannel, dutyCycle);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, (ledc_channel_t)_pwmChannel);
 }
 
-void Talos_Motor::stop()
-{
+void Talos_Motor::stop(){
     ledc_set_duty(LEDC_LOW_SPEED_MODE, (ledc_channel_t)_pwmChannel, 0);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, (ledc_channel_t)_pwmChannel);
 }

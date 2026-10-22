@@ -27,6 +27,12 @@ void MotorControls::SetupMotorControlsSystem(){
     setupEncoderSystem();
 
     ResetMotorControlsSystem();
+
+    Serial.print("Left AIN = ");
+    Serial.println(digitalRead(MOTOR_LEFT_AIN));
+
+    Serial.print("Right AIN = ");
+    Serial.println(digitalRead(MOTOR_RIGHT_AIN));
 }
 
 void MotorControls::SetupMotorControlsSystemWithIR(){
@@ -141,6 +147,9 @@ void IRAM_ATTR MotorControls::onIRRightISR(){
 // ==== Public Methods =================================================================================================================================
 
 void MotorControls::goForward(uint32_t targetPulses){
+    
+    Serial.println("goForward entered");
+    
     // Start from a known state
     encoderLeft.reset();
     encoderRight.reset();
@@ -148,6 +157,14 @@ void MotorControls::goForward(uint32_t targetPulses){
     // Start both motors
     motorLeft.setPWM(BASE_LEFT_DRIVE_PWM);
     motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
+
+    Serial.println("PWM applied");
+
+    Serial.print("Left Encoder Count: ");
+    Serial.println(encoderLeft.getCount());
+
+    Serial.print("Right Encoder Count: ");
+    Serial.println(encoderRight.getCount());
 
     // Continue until BOTH wheels reach target
     while (encoderLeft.getCount() < targetPulses || encoderRight.getCount() < targetPulses){
