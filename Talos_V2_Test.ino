@@ -25,6 +25,7 @@ void loop() {
         Serial.println("About to call goForward()");
         robot.goForward(1000);
         Serial.println("Returned from goForward()");
+        turnOffRunning();
     }
 }
 
