@@ -10,8 +10,12 @@ MotorControls* MotorControls::instancePtr = nullptr;
 
 // ==== Constructor =====================================================================================================================================
 
-MotorControls::MotorControls() : motorLeft(MOTOR_LEFT_PWM, 0, 20000, 10), motorRight(MOTOR_RIGHT_PWM, 1, 20000, 10), encoderLeft(), encoderRight(){
-    // Assign instance pointer for ISR access
+MotorControls::MotorControls()
+    : motorLeft(MOTOR_LEFT_PWM, 0, 20000, 8),
+      motorRight(MOTOR_RIGHT_PWM, 1, 20000, 8),
+      encoderLeft(),
+      encoderRight()
+{
     instancePtr = this;
 }
 // ==== Setup Functions =================================================================================================================================
