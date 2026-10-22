@@ -23,8 +23,8 @@ public:
 
 private:
     // ==== Motion Constants ====
-    static const uint16_t BASE_LEFT_DRIVE_PWM  = 600;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
-    static const uint16_t BASE_RIGHT_DRIVE_PWM = 600;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t BASE_LEFT_DRIVE_PWM  = 200;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t BASE_RIGHT_DRIVE_PWM = 200;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t LANE_CORRECTION_PWM = 50;     // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t MAX_PWM = 1023;               // 10-bit PWM resolution = 0-1023                  // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t DEFAULT_ACCELERATION_DELAY_MS = 10;                                              // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
