@@ -16,15 +16,17 @@ public:
     // System-wide reset (stop motors, clear flags, reset encoders)
     void ResetMotorControlsSystem();
 
-    // Movement methods
+    // Movement methods 
+    // NOTE: 50 pulses = ~1cm
     void goForward(uint32_t targetPulses);      // moves forward, only stops when encoder target pulses are reached.
     void goForwardUntilIntersection();          // moves forward, only stops when stop line is detected.
     void goForwardWithIR(uint32_t targetPulses, bool enableStopBarDetection); // moves forward with lane correction, only stops when encoder target pulses are reached. if "enableStopBarDetection" is true, then also stop at the next stop line.
 
 private:
+    
     // ==== Motion Constants ====
-    static const uint16_t BASE_LEFT_DRIVE_PWM  = 200;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
-    static const uint16_t BASE_RIGHT_DRIVE_PWM = 200;   // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+    static const uint16_t BASE_LEFT_DRIVE_PWM  = 200;   // Tune this number to calibrate motor differences 
+    static const uint16_t BASE_RIGHT_DRIVE_PWM = 210;   // Tune this number to calibrate motor differences 
     static const uint16_t LANE_CORRECTION_PWM = 50;     // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t MAX_PWM = 1023;               // 10-bit PWM resolution = 0-1023                  // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t DEFAULT_ACCELERATION_DELAY_MS = 10;                                              // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
