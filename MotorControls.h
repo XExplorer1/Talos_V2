@@ -30,6 +30,8 @@ public:
     //standardized intersection turns
     void IntersectionLeftTurn(); 
     void IntersectionRightTurn();
+    void SmoothIntersectionLeftTurn();
+    void SmoothIntersectionRightTurn();
 
 private:
     
@@ -46,6 +48,12 @@ private:
 
     static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 690;  // # of pulses for a 90-degree left turn <--adjust this value
     static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 690; // # of pulses for a 90-degree right turn <--adjust this value
+    // Smooth left
+    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR = 700;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR = 700; // # of pulses for a 90-degree right turn <--adjust this value
+    // Smooth right
+    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_LEFT_MOTOR = 700;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_RIGHT_MOTOR = 700; // # of pulses for a 90-degree right turn <--adjust this value
 
     // ==== Pin Definitions ====
     static const uint8_t IR_FRONT_PIN = 14;
