@@ -22,9 +22,34 @@ void loop() {
 
     On_Off_Switch(); // if off, wait till button press. if on, stop if button pressed.
     if(running){
+        /*
+        //forward test block 
         Serial.println("About to call goForward()");
         robot.goForward(4950); // NOTE: 50 pulses = ~1cm
         Serial.println("Returned from goForward()");
+        */
+
+        //left turn test block
+        Serial.println("About to call turnLeft(int)");
+        robot.turnLeft(690);
+        Serial.println("Returned from turnLeft(int)");
+
+        //right turn test block
+        Serial.println("About to call turnRight(int)");
+        robot.turnRight(690);
+        Serial.println("Returned from turnRight(int)");
+
+        
+        //intersection left turn test block 
+        Serial.println("About to call intersectionLeftTurn()");
+        robot.IntersectionLeftTurn();
+        Serial.println("Returned from intersectionLeftTurn()");
+
+        //intersection right turn test block
+        Serial.println("About to call gintersectionRightTurn()");
+        robot.IntersectionRightTurn();
+        Serial.println("Returned from intersectionRightTurn()");
+        */
         turnOffRunning();
     }
 }
