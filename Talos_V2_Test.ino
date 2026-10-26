@@ -43,21 +43,21 @@ void loop() {
         Serial.println("Returned from turnRight(int)");
 
         delay(1000);
-*/
+
         //intersection left turn test block ///////////////////////////////////////////////////////////////
         Serial.println("About to call intersectionLeftTurn()");
         robot.IntersectionLeftTurn();
         Serial.println("Returned from intersectionLeftTurn()");
 
         delay(1000);
-/*
+*/
         //intersection right turn test block ///////////////////////////////////////////////////////////////
         Serial.println("About to call gintersectionRightTurn()");
         robot.IntersectionRightTurn();
         Serial.println("Returned from intersectionRightTurn()");
 
         delay(1000);
-
+/*
         //Smooth intersection left turn test block ///////////////////////////////////////////////////////////////
         Serial.println("About to call SmoothIntersectionLeftTurn()");
         robot.SmoothIntersectionLeftTurn();
