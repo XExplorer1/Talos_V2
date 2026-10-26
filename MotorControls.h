@@ -44,11 +44,11 @@ private:
     static const uint16_t DEFAULT_ACCELERATION_DELAY_MS = 10;                                              // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
 
     // ==== Intersection Constants ====
-    static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN = 1700;  // ~10cm <--adjust this value
+    static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN = 1900;  // ~10cm <--adjust this value
     static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_RIGHT_TURN = 1200; // ~3cm <--adjust this value
 
-    static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 800;  // # of pulses for a 90-degree left turn <--adjust this value
-    static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 800; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 750;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 750; // # of pulses for a 90-degree right turn <--adjust this value
 
     // Smooth left
     static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR = 700;  // # of pulses for a 90-degree left turn <--adjust this value
