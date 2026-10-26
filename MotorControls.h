@@ -21,6 +21,14 @@ public:
     void goForward(uint32_t targetPulses);      // moves forward, only stops when encoder target pulses are reached.
     void goForwardUntilIntersection();          // moves forward, only stops when stop line is detected.
     void goForwardWithIR(uint32_t targetPulses, bool enableStopBarDetection); // moves forward with lane correction, only stops when encoder target pulses are reached. if "enableStopBarDetection" is true, then also stop at the next stop line.
+    
+    //manual turn methods
+    void turnLeft(uint32_t targetPulses);
+    void turnRight(uint32_t targetPulses);
+    
+    //standardized intersection turns
+    void IntersectionLeftTurn(); 
+    void IntersectionRightTurn();
 
 private:
     
