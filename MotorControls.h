@@ -10,13 +10,14 @@ public:
     MotorControls();
 
     // System initialization
-    void SetupMotorControlsSystem();
-    void SetupMotorControlsSystemWithIR();
+    void SetupMotorControlsSystem();        // <-- use this one if IR sensors will be managed by the NAV system
+    void SetupMotorControlsSystemWithIR();  // <-- use this one if IR sensors will be managed by the Motor system
 
     // System-wide reset (stop motors, clear flags, reset encoders)
     void ResetMotorControlsSystem();
 
-    // Movement methods 
+    // Movement methods ///////////////////////////////////////////////////////////////// 
+    
     // NOTE: 50 pulses = ~1cm
     void goForward(uint32_t targetPulses);      // moves forward, only stops when encoder target pulses are reached.
     void goForwardUntilIntersection();          // moves forward, only stops when stop line is detected.
@@ -38,6 +39,13 @@ private:
     static const uint16_t LANE_CORRECTION_PWM = 50;     // Tune this number to calibrate motor differences // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t MAX_PWM = 1023;               // 10-bit PWM resolution = 0-1023                  // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
     static const uint16_t DEFAULT_ACCELERATION_DELAY_MS = 10;                                              // << DOUBLE CHECK THIS, VALUE GIVEN BY AI <------------------------------------------------
+
+    // ==== Intersection Constants ====
+    static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN = 500;  // ~10cm <--adjust this value
+    static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_RIGHT_TURN = 150; // ~3cm <--adjust this value
+
+    static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 500;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 500; // # of pulses for a 90-degree right turn <--adjust this value
 
     // ==== Pin Definitions ====
     static const uint8_t IR_FRONT_PIN = 14;
