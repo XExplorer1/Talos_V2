@@ -52,6 +52,12 @@ void MotorControls::SetupMotorControlsSystemWithIR(){
     setupIRSystem();
 
     ResetMotorControlsSystem();
+
+    Serial.print("Left AIN = ");
+    Serial.println(digitalRead(MOTOR_LEFT_AIN));
+
+    Serial.print("Right AIN = ");
+    Serial.println(digitalRead(MOTOR_RIGHT_AIN));
 }
 
 void MotorControls::ResetMotorControlsSystem(){
@@ -78,15 +84,9 @@ void MotorControls::setupEncoderSystem(){
     pinMode(ENC_RIGHT_PIN, INPUT);
 
     // Attach encoder interrupts
-    attachInterrupt(
-        digitalPinToInterrupt(ENC_LEFT_PIN),
-        onEncoderLeftISR,
-        RISING);
+    attachInterrupt(digitalPinToInterrupt(ENC_LEFT_PIN), onEncoderLeftISR, RISING);
 
-    attachInterrupt(
-        digitalPinToInterrupt(ENC_RIGHT_PIN),
-        onEncoderRightISR,
-        RISING);
+    attachInterrupt(digitalPinToInterrupt(ENC_RIGHT_PIN), onEncoderRightISR, RISING);
 }
 
 void MotorControls::setupIRSystem(){
@@ -98,20 +98,9 @@ void MotorControls::setupIRSystem(){
 // ==== Helper Functions ================================================================================================================================
 
 void MotorControls::enableIRInterrupts(){
-    attachInterrupt(
-        digitalPinToInterrupt(IR_FRONT_PIN),
-        onIRFrontISR,
-        RISING);
-
-    attachInterrupt(
-        digitalPinToInterrupt(IR_LEFT_PIN),
-        onIRLeftISR,
-        RISING);
-
-    attachInterrupt(
-        digitalPinToInterrupt(IR_RIGHT_PIN),
-        onIRRightISR,
-        RISING);
+    attachInterrupt(digitalPinToInterrupt(IR_FRONT_PIN), onIRFrontISR, FALLING);
+    attachInterrupt(digitalPinToInterrupt(IR_LEFT_PIN), onIRLeftISR, FALLING);
+    attachInterrupt(digitalPinToInterrupt(IR_RIGHT_PIN), onIRRightISR, FALLING);
 }
 
 void MotorControls::disableIRInterrupts(){
