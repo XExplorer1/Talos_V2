@@ -238,15 +238,22 @@ void MotorControls::IntersectionRightTurn(){
 
 void MotorControls::SmoothIntersectionLeftTurn(){
     Serial.println("SmoothIntersectionLeftTurn() entered");
-    
+
     // Start from a known state
     encoderLeft.reset();
     encoderRight.reset();
+
     uint32_t lastLeft = 0;
     uint32_t lastRight = 0;
 
-    // Start both motors
-    motorLeft.setPWM(BASE_LEFT_DRIVE_PWM);
+    bool leftMotorStopped = false;
+    bool rightMotorStopped = false;
+
+    // Start both motors at different speeds to create an arc
+    int arcPWM = BASE_LEFT_DRIVE_PWM - SMOOTH_LEFT_TURN_LEFT_PWM_REDUCTION;
+    Serial.print("arcPWM = ");
+    Serial.println(arcPWM);
+    motorLeft.setPWM(arcPWM);
     motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
 
     Serial.println("PWM applied");
@@ -255,36 +262,59 @@ void MotorControls::SmoothIntersectionLeftTurn(){
     Serial.print("Right Encoder Count: ");
     Serial.println(encoderRight.getCount());
 
-    // Continue until BOTH wheels reach target
     while (encoderLeft.getCount() < SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR || encoderRight.getCount() < SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR){
-        if (encoderLeft.getCount() != lastLeft || encoderRight.getCount() != lastRight){
-                lastLeft = encoderLeft.getCount();
-                lastRight = encoderRight.getCount();
+        // Stop left wheel once its target is reached
+        if (!leftMotorStopped && encoderLeft.getCount() >= SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR){
+            motorLeft.stop();
+            leftMotorStopped = true;
 
-                Serial.print("L: ");
-                Serial.print(lastLeft);
-                Serial.print("  R: ");
-                Serial.println(lastRight);
-            }
-            delay(1);
+            Serial.println("Left motor target reached");
+        }
+
+        // Stop right wheel once its target is reached
+        if (!rightMotorStopped && encoderRight.getCount() >= SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR){
+            motorRight.stop();
+            rightMotorStopped = true;
+
+            Serial.println("Right motor target reached");
+        }
+
+        if (encoderLeft.getCount() != lastLeft || encoderRight.getCount() != lastRight){
+            lastLeft = encoderLeft.getCount();
+            lastRight = encoderRight.getCount();
+
+            Serial.print("L: ");
+            Serial.print(lastLeft);
+            Serial.print("  R: ");
+            Serial.println(lastRight);
+        }
+
+        delay(1);
     }
 
-    // Stop and clean up
     ResetMotorControlsSystem();
 }
 
+
 void MotorControls::SmoothIntersectionRightTurn(){
     Serial.println("SmoothIntersectionRightTurn() entered");
-    
+
     // Start from a known state
     encoderLeft.reset();
     encoderRight.reset();
+
     uint32_t lastLeft = 0;
     uint32_t lastRight = 0;
 
-    // Start both motors
+    bool leftMotorStopped = false;
+    bool rightMotorStopped = false;
+
+    // Start both motors at different speeds to create an arc
+    int arcPWM = BASE_RIGHT_DRIVE_PWM - SMOOTH_RIGHT_TURN_RIGHT_PWM_REDUCTION;
+    Serial.print("arcPWM = ");
+    Serial.println(arcPWM);
     motorLeft.setPWM(BASE_LEFT_DRIVE_PWM);
-    motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
+    motorRight.setPWM(arcPWM);
 
     Serial.println("PWM applied");
     Serial.print("Left Encoder Count: ");
@@ -292,21 +322,36 @@ void MotorControls::SmoothIntersectionRightTurn(){
     Serial.print("Right Encoder Count: ");
     Serial.println(encoderRight.getCount());
 
-    // Continue until BOTH wheels reach target
-    while (encoderLeft.getCount() < SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_LEFT_MOTOR || encoderRight.getCount() < SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_RIGHT_MOTOR){
-        if (encoderLeft.getCount() != lastLeft || encoderRight.getCount() != lastRight){
-                lastLeft = encoderLeft.getCount();
-                lastRight = encoderRight.getCount();
+    while (encoderLeft.getCount() < SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR || encoderRight.getCount() < SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR){
+        // Stop left wheel once its target is reached
+        if (!leftMotorStopped && encoderLeft.getCount() >= SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR){
+            motorLeft.stop();
+            leftMotorStopped = true;
 
-                Serial.print("L: ");
-                Serial.print(lastLeft);
-                Serial.print("  R: ");
-                Serial.println(lastRight);
-            }
-            delay(1);
+            Serial.println("Left motor target reached");
+        }
+
+        // Stop right wheel once its target is reached
+        if (!rightMotorStopped && encoderRight.getCount() >= SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR){
+            motorRight.stop();
+            rightMotorStopped = true;
+
+            Serial.println("Right motor target reached");
+        }
+
+        if (encoderLeft.getCount() != lastLeft || encoderRight.getCount() != lastRight){
+            lastLeft = encoderLeft.getCount();
+            lastRight = encoderRight.getCount();
+
+            Serial.print("L: ");
+            Serial.print(lastLeft);
+            Serial.print("  R: ");
+            Serial.println(lastRight);
+        }
+
+        delay(1);
     }
 
-    // Stop and clean up
     ResetMotorControlsSystem();
 }
 

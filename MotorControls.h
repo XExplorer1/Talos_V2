@@ -51,11 +51,13 @@ private:
     static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 720; // # of pulses for a 90-degree right turn <--adjust this value
 
     // Smooth left
-    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR = 700;  // # of pulses for a 90-degree left turn <--adjust this value
-    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR = 700; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_LEFT_MOTOR = 3000;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_LEFT_TURN_PULSES_RIGHT_MOTOR = 3000; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint16_t SMOOTH_LEFT_TURN_LEFT_PWM_REDUCTION = 10; // the number that will be subtracted from the left motor PWM to get a proper arc
     // Smooth right
-    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_LEFT_MOTOR = 700;  // # of pulses for a 90-degree left turn <--adjust this value
-    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_RIGHT_MOTOR = 700; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_LEFT_MOTOR = 3000;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t SMOOTH_INTERSECTION_RIGHT_TURN_PULSES_RIGHT_MOTOR = 3000; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint16_t SMOOTH_RIGHT_TURN_RIGHT_PWM_REDUCTION = 10;   // the number that will be subtracted from the right motor PWM to get a proper arc
 
     // ==== Pin Definitions ====
     static const uint8_t IR_FRONT_PIN = 14;
