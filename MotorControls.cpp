@@ -153,19 +153,15 @@ void MotorControls::goForward(uint32_t targetPulses){
     motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
 
     Serial.println("PWM applied");
-
     Serial.print("Left Encoder Count: ");
     Serial.println(encoderLeft.getCount());
-
     Serial.print("Right Encoder Count: ");
     Serial.println(encoderRight.getCount());
 
     // Continue until BOTH wheels reach target
     while (encoderLeft.getCount() < targetPulses || encoderRight.getCount() < targetPulses){
-        if (encoderLeft.getCount() != lastLeft ||
-                encoderRight.getCount() != lastRight)
-            {
-                lastLeft  = encoderLeft.getCount();
+        if (encoderLeft.getCount() != lastLeft || encoderRight.getCount() != lastRight){
+                lastLeft = encoderLeft.getCount();
                 lastRight = encoderRight.getCount();
 
                 Serial.print("L: ");
@@ -173,11 +169,55 @@ void MotorControls::goForward(uint32_t targetPulses){
                 Serial.print("  R: ");
                 Serial.println(lastRight);
             }
-
             delay(1);
     }
 
     // Stop and clean up
     ResetMotorControlsSystem();
 }
+
+void MotorControls::turnLeft(uint32_t targetPulses){
+    Serial.println("turnLeft entered");
+
+    // Start from a known state
+    encoderLeft.reset();
+    encoderRight.reset();
+
+    // Stop right wheel
+    motorRight.stop();
+
+    // Drive left wheel
+    motorLeft.setPWM(BASE_LEFT_DRIVE_PWM);
+
+    while (encoderLeft.getCount() < targetPulses){
+        delay(1);
+    }
+
+    Serial.println("turnLeft target reached");
+
+    ResetMotorControlsSystem();
+}
+
+void MotorControls::turnRight(uint32_t targetPulses){
+    Serial.println("turnRight entered");
+
+    // Start from a known state
+    encoderLeft.reset();
+    encoderRight.reset();
+
+    // Stop left wheel
+    motorLeft.stop();
+
+    // Drive right wheel
+    motorRight.setPWM(BASE_RIGHT_DRIVE_PWM);
+
+    while (encoderRight.getCount() < targetPulses){
+        delay(1);
+    }
+
+    Serial.println("turnRight target reached");
+
+    ResetMotorControlsSystem();
+}
+
 
