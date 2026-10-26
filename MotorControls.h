@@ -44,8 +44,8 @@ private:
     static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN = 500;  // ~10cm <--adjust this value
     static const uint32_t INTERSECTION_FORWARD_PULSES_FOR_RIGHT_TURN = 150; // ~3cm <--adjust this value
 
-    static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 500;  // # of pulses for a 90-degree left turn <--adjust this value
-    static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 500; // # of pulses for a 90-degree right turn <--adjust this value
+    static const uint32_t INTERSECTION_LEFT_TURN_PULSES = 690;  // # of pulses for a 90-degree left turn <--adjust this value
+    static const uint32_t INTERSECTION_RIGHT_TURN_PULSES = 690; // # of pulses for a 90-degree right turn <--adjust this value
 
     // ==== Pin Definitions ====
     static const uint8_t IR_FRONT_PIN = 14;
