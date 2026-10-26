@@ -222,11 +222,17 @@ void MotorControls::turnRight(uint32_t targetPulses){
 
 void MotorControls::IntersectionLeftTurn(){
     goForward(INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN);
+    delay(500);
     turnLeft(INTERSECTION_LEFT_TURN_PULSES);
+    delay(500);
+    goForward(INTERSECTION_FORWARD_PULSES_FOR_LEFT_TURN);
 }
 
 void MotorControls::IntersectionRightTurn(){
     goForward(INTERSECTION_FORWARD_PULSES_FOR_RIGHT_TURN);
+    delay(500);
     turnRight(INTERSECTION_RIGHT_TURN_PULSES);
+    delay(500);
+    goForward(INTERSECTION_FORWARD_PULSES_FOR_RIGHT_TURN);
 }
 
