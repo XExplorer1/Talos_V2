@@ -22,9 +22,54 @@ void loop() {
 
     On_Off_Switch(); // if off, wait till button press. if on, stop if button pressed.
     if(running){
+/*
+        //forward test block ///////////////////////////////////////////////////////////////
         Serial.println("About to call goForward()");
         robot.goForward(4950); // NOTE: 50 pulses = ~1cm
         Serial.println("Returned from goForward()");
+    
+        delay(1000);
+        
+        //left turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call turnLeft(int)");
+        robot.turnLeft(690);
+        Serial.println("Returned from turnLeft(int)");
+
+        delay(1000);
+
+        //right turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call turnRight(int)");
+        robot.turnRight(690);
+        Serial.println("Returned from turnRight(int)");
+
+        delay(1000);
+
+        //intersection left turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call intersectionLeftTurn()");
+        robot.IntersectionLeftTurn();
+        Serial.println("Returned from intersectionLeftTurn()");
+
+        delay(1000);
+*/
+        //intersection right turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call gintersectionRightTurn()");
+        robot.IntersectionRightTurn();
+        Serial.println("Returned from intersectionRightTurn()");
+
+        delay(1000);
+/*
+        //Smooth intersection left turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call SmoothIntersectionLeftTurn()");
+        robot.SmoothIntersectionLeftTurn();
+        Serial.println("Returned from SmoothIntersectionLeftTurn()");
+
+        delay(1000);
+
+        //smooth intersection right turn test block ///////////////////////////////////////////////////////////////
+        Serial.println("About to call SmoothIntersectionRightTurn()");
+        robot.SmoothIntersectionRightTurn();
+        Serial.println("Returned from SmoothIntersectionRightTurn()");
+*/
         turnOffRunning();
     }
 }
