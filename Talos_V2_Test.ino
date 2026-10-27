@@ -19,64 +19,87 @@ void setup() {
     Serial.println("Boot complete. Waiting for first button press...");
 }
 void loop() {
+    TestOneMotorControlsMethod(1);
+    /* TestOneMotorControlsMethod(int)
+    1 = go forward
+    2 = turn left
+    3 = turn right
+    4 = intersection left
+    5 = intersection right
+    6 = smooth intersection left
+    7 = smooth intersection right
+    */
+}
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// TEST FUNCTIONS
+
+void TestOneMotorControlsMethod(uint16_t caseNumber){
+    /* TestOneMotorControlsMethod(int)
+    1 = go forward
+    2 = turn left
+    3 = turn right
+    4 = intersection left
+    5 = intersection right
+    6 = smooth intersection left
+    7 = smooth intersection right
+    */
     On_Off_Switch(); // if off, wait till button press. if on, stop if button pressed.
+
     if(running){
-/*
-        //forward test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call goForward()");
-        robot.goForward(4950); // NOTE: 50 pulses = ~1cm
-        Serial.println("Returned from goForward()");
-    
-        delay(1000);
-        
-        //left turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call turnLeft(int)");
-        robot.turnLeft(690);
-        Serial.println("Returned from turnLeft(int)");
+        switch(caseNumber){
 
-        delay(1000);
-
-        //right turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call turnRight(int)");
-        robot.turnRight(690);
-        Serial.println("Returned from turnRight(int)");
-
-        delay(1000);
-
-        //intersection left turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call intersectionLeftTurn()");
-        robot.IntersectionLeftTurn();
-        Serial.println("Returned from intersectionLeftTurn()");
-
-        delay(1000);
-*/
-        //intersection right turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call gintersectionRightTurn()");
-        robot.IntersectionRightTurn();
-        Serial.println("Returned from intersectionRightTurn()");
-
-        delay(1000);
-/*
-        //Smooth intersection left turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call SmoothIntersectionLeftTurn()");
-        robot.SmoothIntersectionLeftTurn();
-        Serial.println("Returned from SmoothIntersectionLeftTurn()");
-
-        delay(1000);
-
-        //smooth intersection right turn test block ///////////////////////////////////////////////////////////////
-        Serial.println("About to call SmoothIntersectionRightTurn()");
-        robot.SmoothIntersectionRightTurn();
-        Serial.println("Returned from SmoothIntersectionRightTurn()");
-*/
+            case 1:
+                //forward test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call goForward()");
+                robot.goForward(4950); // NOTE: 50 pulses = ~1cm
+                Serial.println("Returned from goForward()");
+                break;
+            case 2:
+                //left turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call turnLeft(int)");
+                robot.turnLeft(700);
+                Serial.println("Returned from turnLeft(int)");
+                break;
+            case 3:
+                //right turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call turnRight(int)");
+                robot.turnRight(730);
+                Serial.println("Returned from turnRight(int)");
+                break;
+            case 4:
+                //intersection left turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call intersectionLeftTurn()");
+                robot.IntersectionLeftTurn();
+                Serial.println("Returned from intersectionLeftTurn()");
+                break;
+            case 5:
+                //intersection right turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call gintersectionRightTurn()");
+                robot.IntersectionRightTurn();
+                Serial.println("Returned from intersectionRightTurn()");
+                break;
+            case 6:
+                //Smooth intersection left turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call SmoothIntersectionLeftTurn()");
+                robot.SmoothIntersectionLeftTurn();
+                Serial.println("Returned from SmoothIntersectionLeftTurn()");
+                break;
+            case 7:
+                //smooth intersection right turn test block ///////////////////////////////////////////////////////////////
+                Serial.println("About to call SmoothIntersectionRightTurn()");
+                robot.SmoothIntersectionRightTurn();
+                Serial.println("Returned from SmoothIntersectionRightTurn()");
+                break;
+            default:
+                Serial.println("invalid test choice value. [default case]");
+        }
         turnOffRunning();
     }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // HELPER FUNCTIONS
-
 
 // The function returns true only once per physical press, after confirming the button is held for ~50 ms (debounce) and then waiting until the user releases it before returning.
 bool buttonPressed() {
