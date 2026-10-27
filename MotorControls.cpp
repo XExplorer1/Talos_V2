@@ -176,8 +176,8 @@ void MotorControls::goForward(uint32_t targetPulses){
     ResetMotorControlsSystem();
 }
 
-void MotorControls::turnLeft(uint32_t targetPulses){
-    Serial.println("turnLeft entered");
+void MotorControls::turnRight(uint32_t targetPulses){
+    Serial.println("turnRight entered");
 
     // Start from a known state
     encoderLeft.reset();
@@ -193,13 +193,13 @@ void MotorControls::turnLeft(uint32_t targetPulses){
         delay(1);
     }
 
-    Serial.println("turnLeft target reached");
+    Serial.println("turnRight target reached");
 
     ResetMotorControlsSystem();
 }
 
-void MotorControls::turnRight(uint32_t targetPulses){
-    Serial.println("turnRight entered");
+void MotorControls::turnLeft(uint32_t targetPulses){
+    Serial.println("turnLeft entered");
 
     // Start from a known state
     encoderLeft.reset();
@@ -215,7 +215,7 @@ void MotorControls::turnRight(uint32_t targetPulses){
         delay(1);
     }
 
-    Serial.println("turnRight target reached");
+    Serial.println("turnLeft target reached");
 
     ResetMotorControlsSystem();
 }
